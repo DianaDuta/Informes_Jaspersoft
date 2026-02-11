@@ -1,0 +1,205 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="b_resumen_clientes" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5361d403-298d-40d1-8016-1ce0b92b4305">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<query language="SQL"><![CDATA[SELECT address.id AS ID_CLIENTE,
+			 address.firstname AS NOMBRE,
+   			 address.lastname AS APELLIDO,
+			 product.name AS PRODUCTO,
+    		 positions.quantity AS CANTIDAD,
+    		 positions.price AS PRECIO,
+    		 document.total AS TOTAL,
+    		 product.id AS ID_PRODUCTO
+FROM address, product, positions, document
+WHERE address.id = document.addressid AND positions.documentid = document.id AND
+			positions.productid = product.id
+
+]]></query>
+	<field name="ID_CLIENTE" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_CLIENTE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FIRSTNAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="APELLIDO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="LASTNAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="APELLIDO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="PRODUCTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRODUCTO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PRODUCT"/>
+	</field>
+	<field name="CANTIDAD" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="QUANTITY"/>
+		<property name="com.jaspersoft.studio.field.label" value="CANTIDAD"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="POSITIONS"/>
+	</field>
+	<field name="PRECIO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRECIO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="POSITIONS"/>
+	</field>
+	<field name="TOTAL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TOTAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DOCUMENT"/>
+	</field>
+	<field name="ID_PRODUCTO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_PRODUCTO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PRODUCT"/>
+	</field>
+	<variable name="TOTAL_UNIDADES_COMPRADAS" resetType="Group" calculation="Sum" resetGroup="Cliente" class="java.lang.Integer">
+		<expression><![CDATA[$F{CANTIDAD}]]></expression>
+	</variable>
+	<variable name="TOTAL_GASTADO" resetType="Group" calculation="Sum" resetGroup="Cliente" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{TOTAL}]]></expression>
+	</variable>
+	<variable name="TOTAL_PRODUCTOS_DISTINTOS" resetType="Group" calculation="DistinctCount" resetGroup="Cliente" class="java.lang.Integer">
+		<expression><![CDATA[$F{ID_PRODUCTO}]]></expression>
+	</variable>
+	<variable name="TOTAL_CLIENTES" calculation="DistinctCount" class="java.lang.Integer">
+		<expression><![CDATA[$F{ID_CLIENTE}]]></expression>
+	</variable>
+	<variable name="MEDIA_GASTADA" class="java.lang.Double">
+		<expression><![CDATA[$V{TOTAL_GASTADO}.doubleValue() / $V{TOTAL_CLIENTES}.doubleValue()]]></expression>
+	</variable>
+	<variable name="MEDIA_PRODUCTOS" class="java.lang.Double">
+		<expression><![CDATA[$V{TOTAL_UNIDADES_COMPRADAS}.doubleValue() / $V{TOTAL_CLIENTES}.doubleValue()]]></expression>
+	</variable>
+	<variable name="MENOS_GASTADO_CLIENTE" calculation="Lowest" class="java.lang.Double">
+		<expression><![CDATA[$F{TOTAL}.doubleValue()]]></expression>
+	</variable>
+	<variable name="MAX_GASTADO_CLIENTE" calculation="Highest" class="java.lang.Double">
+		<expression><![CDATA[$F{TOTAL}.doubleValue()]]></expression>
+	</variable>
+	<variable name="MIN_DATOS_CLIENTE" class="java.lang.String">
+		<expression><![CDATA[($F{TOTAL}.doubleValue() == $V{MENOS_GASTADO_CLIENTE}.doubleValue()) ? $F{NOMBRE} + $F{APELLIDO} : ""
+	
+]]></expression>
+		<initialValueExpression><![CDATA[""]]></initialValueExpression>
+	</variable>
+	<variable name="MAX_DATOS_CLIENTE" class="java.lang.String">
+		<expression><![CDATA[$F{TOTAL}.doubleValue() == $V{MENOS_GASTADO_CLIENTE}.doubleValue() ? $F{NOMBRE} + " " + $F{APELLIDO} : " "]]></expression>
+	</variable>
+	<group name="Cliente">
+		<expression><![CDATA[$F{NOMBRE} + " " + $F{APELLIDO}]]></expression>
+		<groupHeader>
+			<band height="30">
+				<element kind="textField" uuid="2cf32fee-3a14-4f78-8891-e97bb900ae8b" x="0" y="0" width="243" height="30">
+					<expression><![CDATA[$F{NOMBRE} + " " + $F{APELLIDO}]]></expression>
+				</element>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="60">
+				<element kind="textField" uuid="0cbc4a99-a9e9-42c7-a0c6-a3c9c540569a" x="180" y="30" width="100" height="30">
+					<expression><![CDATA[$V{TOTAL_UNIDADES_COMPRADAS}]]></expression>
+				</element>
+				<element kind="textField" uuid="da7be6c4-f3e8-45b0-b43c-6271051a5e4e" x="280" y="30" width="100" height="30" pattern="0.00€">
+					<expression><![CDATA[$V{TOTAL_GASTADO}]]></expression>
+				</element>
+				<element kind="textField" uuid="e284e975-8663-4180-9d3d-c2c57da35240" x="80" y="30" width="100" height="30">
+					<expression><![CDATA[$V{TOTAL_PRODUCTOS_DISTINTOS}]]></expression>
+				</element>
+				<element kind="staticText" uuid="258f1ccf-5098-4d07-afcd-44beae4fc020" x="280" y="0" width="100" height="30">
+					<text><![CDATA[Total gastado:]]></text>
+				</element>
+				<element kind="staticText" uuid="a27212e6-2c07-4a59-9cf1-5143216815a1" x="80" y="0" width="100" height="30">
+					<text><![CDATA[Productos diferentes:]]></text>
+				</element>
+				<element kind="staticText" uuid="9a6f7210-51eb-4d02-8adb-ceaca5d6dcf3" x="180" y="0" width="100" height="30">
+					<text><![CDATA[Total unidades compradas:]]></text>
+				</element>
+			</band>
+		</groupFooter>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="99584575-240f-44a4-a7e9-bea6825e9c67" x="79" y="20" width="443" height="30" fontName="Times New Roman" fontSize="18.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[EJERCICIO 2: INFORMES AVANZADOS]]></text>
+		</element>
+	</title>
+	<columnHeader height="30" splitType="Stretch">
+		<element kind="staticText" uuid="4d9acc34-690f-4d0b-a7c3-4d5cfe4bbc41" x="80" y="0" width="100" height="30">
+			<text><![CDATA[CANTIDAD]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="15f0e877-37ad-4ad4-bab8-02e0c4cb5499"/>
+		</element>
+		<element kind="staticText" uuid="f96a4532-ccc0-4986-8f6c-bd5359cdcc0f" x="180" y="0" width="100" height="30">
+			<text><![CDATA[PRECIO]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e52b497c-4f2f-4c2d-9595-47aea940b926"/>
+		</element>
+		<element kind="staticText" uuid="3cebf2b2-c82a-4bd0-a664-53e02da6a6fd" x="280" y="0" width="100" height="30">
+			<text><![CDATA[TOTAL]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7219396f-62b2-44ec-bf9f-5b08dab3d043"/>
+		</element>
+		<element kind="staticText" uuid="56ad223b-f18a-4de0-9253-377dc0fd2e99" x="0" y="0" width="80" height="30">
+			<text><![CDATA[PRODUCTO]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="153c729b-879d-4344-a602-98d12c37e416"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<element kind="textField" uuid="49d0ce5d-76ce-4187-8af7-690bd83af1ce" x="0" y="0" width="80" height="30">
+				<expression><![CDATA[$F{PRODUCTO}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="153c729b-879d-4344-a602-98d12c37e416"/>
+			</element>
+			<element kind="textField" uuid="e5cd43c5-1576-4d80-9a4b-79b0d2089e18" x="80" y="0" width="100" height="30">
+				<expression><![CDATA[$F{CANTIDAD}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="15f0e877-37ad-4ad4-bab8-02e0c4cb5499"/>
+			</element>
+			<element kind="textField" uuid="f519a67d-7367-4636-b73c-34595397932a" x="180" y="0" width="100" height="30" pattern="0.00€">
+				<expression><![CDATA[$F{PRECIO}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e52b497c-4f2f-4c2d-9595-47aea940b926"/>
+			</element>
+			<element kind="textField" uuid="4bed8221-81c4-4a94-b15b-e01a40ab85ae" x="280" y="0" width="100" height="30" pattern="0.00€">
+				<expression><![CDATA[$F{TOTAL}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7219396f-62b2-44ec-bf9f-5b08dab3d043"/>
+			</element>
+		</band>
+	</detail>
+	<summary height="172" splitType="Stretch">
+		<element kind="staticText" uuid="91d7996a-c352-4b27-95a9-4a27b7ea67c3" x="0" y="0" width="190" height="30">
+			<text><![CDATA[Total clientes que han solicitado pedidos:]]></text>
+		</element>
+		<element kind="textField" uuid="d3fe1631-1030-4462-81db-593b6ff82d45" x="190" y="1" width="100" height="30">
+			<expression><![CDATA[$V{TOTAL_CLIENTES}]]></expression>
+		</element>
+		<element kind="staticText" uuid="3e63227d-4906-42cd-8be0-a3c9b288adce" x="0" y="31" width="170" height="30">
+			<text><![CDATA[Cantidad media gastada por cliente:]]></text>
+		</element>
+		<element kind="staticText" uuid="e0973b19-6a54-454c-a146-538586dfd192" x="0" y="61" width="242" height="39">
+			<text><![CDATA[Cantidad media de productos comprados por cliente:]]></text>
+		</element>
+		<element kind="staticText" uuid="929ca8f3-79fd-4f37-b1b5-0f617bb8331d" x="0" y="101" width="150" height="30">
+			<text><![CDATA[Cliente que menos ha gastado:]]></text>
+		</element>
+		<element kind="staticText" uuid="c046ae81-961b-44fa-b312-aea69b830c2c" x="0" y="131" width="140" height="30">
+			<text><![CDATA[Cliente que más ha gastado:]]></text>
+		</element>
+		<element kind="textField" uuid="e642af48-19fb-43d0-a3a1-d7d14c408c20" x="170" y="31" width="100" height="30" pattern="0.00€/cliente">
+			<expression><![CDATA[$V{MEDIA_GASTADA}]]></expression>
+		</element>
+		<element kind="textField" uuid="9bcc329f-1ca2-4ee0-b0c1-b0f327f7a750" x="242" y="61" width="100" height="30" pattern="0.00 unidades/cliente">
+			<expression><![CDATA[$V{MEDIA_PRODUCTOS}]]></expression>
+		</element>
+		<element kind="textField" uuid="030d408e-9a83-4685-9c5b-609851cc4bab" x="250" y="101" width="100" height="30" pattern="0.00€">
+			<expression><![CDATA[$V{MENOS_GASTADO_CLIENTE}]]></expression>
+		</element>
+		<element kind="textField" uuid="c4045555-e594-44f0-86d9-c32dcb7c414c" x="250" y="131" width="100" height="30" pattern="0.00€">
+			<expression><![CDATA[$V{MAX_GASTADO_CLIENTE}]]></expression>
+		</element>
+		<element kind="textField" uuid="4ad3136c-efa0-42f1-9bed-cfe2bd5ddba0" x="150" y="100" width="100" height="30">
+			<expression><![CDATA[$V{MIN_DATOS_CLIENTE}]]></expression>
+		</element>
+		<element kind="textField" uuid="204d4299-5584-4968-96f7-eed548418b99" x="143" y="130" width="100" height="30">
+			<expression><![CDATA[$V{MAX_DATOS_CLIENTE}]]></expression>
+		</element>
+	</summary>
+</jasperReport>

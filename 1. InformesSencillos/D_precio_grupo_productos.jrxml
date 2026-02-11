@@ -1,0 +1,95 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="InformesSencillos" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eff02c20-84fe-4125-b8ab-73f89a2299e1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="573"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="413"/>
+	<query language="SQL"><![CDATA[SELECT MAX(positions.price) AS Price, address.firstname, product.name, AVG(positions.price) AS Media
+FROM positions, address, document, product
+WHERE (address.id = document.addressid AND positions.documentid = document.id AND product.id = positions.productid)
+GROUP BY product.name, address.firstname
+ORDER BY product.name]]></query>
+	<field name="PRICE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRICE"/>
+	</field>
+	<field name="FIRSTNAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FIRSTNAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="FIRSTNAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="NAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PRODUCT"/>
+	</field>
+	<field name="MEDIA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="MEDIA"/>
+		<property name="com.jaspersoft.studio.field.label" value="MEDIA"/>
+	</field>
+	<group name="Group1">
+		<expression><![CDATA[$F{NAME}]]></expression>
+		<groupHeader>
+			<band height="40">
+				<element kind="staticText" uuid="839e7e84-2f25-461c-9c4f-7dfa8bea10c2" x="0" y="10" width="60" height="30">
+					<text><![CDATA[NAME]]></text>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="df3a7c26-7d40-4a2e-bd25-07af4b4479b3"/>
+				</element>
+				<element kind="textField" uuid="d779acbf-64cd-4bb4-a687-bca9243bfacf" x="70" y="10" width="100" height="30">
+					<expression><![CDATA[$F{NAME}]]></expression>
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="df3a7c26-7d40-4a2e-bd25-07af4b4479b3"/>
+				</element>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<element kind="staticText" uuid="b67ed13a-a956-477c-8117-7041d989ea08" x="280" y="20" width="75" height="30">
+					<text><![CDATA[MEDIA:]]></text>
+				</element>
+				<element kind="textField" uuid="fbf89496-9c78-4c59-94a6-5053be60a43b" x="370" y="20" width="100" height="30" pattern="0.00">
+					<expression><![CDATA[$F{MEDIA}]]></expression>
+				</element>
+			</band>
+		</groupFooter>
+	</group>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="76eba3ce-117b-44ab-a66b-7ea5be3f60fa" x="106" y="20" width="343" height="30" forecolor="#450908" fontName="Times New Roman" fontSize="20.0" hTextAlign="Center">
+			<text><![CDATA[INFORMES SENCILLOS]]></text>
+		</element>
+	</title>
+	<pageHeader height="69" splitType="Stretch">
+		<element kind="staticText" uuid="07ab95d0-6bc5-4613-9256-817dd6243047" x="0" y="0" width="560" height="30" forecolor="#380B3B" fontName="Times New Roman" fontSize="12.0" hTextAlign="Left" vTextAlign="Middle">
+			<text><![CDATA[Informe D:  Mostrar el precio de venta de los productos agrupado por productos, y más requisitos.]]></text>
+		</element>
+	</pageHeader>
+	<columnHeader height="30" splitType="Stretch">
+		<element kind="staticText" uuid="1a9d01ce-b1ce-460b-88f7-7637211488e6" x="220" y="0" width="100" height="30">
+			<text><![CDATA[FIRSTNAME]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fc9485a7-5d92-440a-a041-4be1ddf72458"/>
+		</element>
+		<element kind="staticText" uuid="a73ff36b-6d1b-4a1f-86ca-6b73dd42d226" x="360" y="0" width="100" height="30">
+			<text><![CDATA[PRICE]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="218f79bd-43e0-4117-8f64-20b4b352fa3b"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<element kind="textField" uuid="833c4bff-42ad-4f64-93f4-6ac117fdc4c4" x="220" y="0" width="100" height="30">
+				<expression><![CDATA[$F{FIRSTNAME}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fc9485a7-5d92-440a-a041-4be1ddf72458"/>
+			</element>
+			<element kind="textField" uuid="5989467b-2f7e-43a0-8fea-4883048a5f25" x="360" y="0" width="100" height="30" pattern="0.00">
+				<expression><![CDATA[$F{PRICE}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="218f79bd-43e0-4117-8f64-20b4b352fa3b"/>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="51" splitType="Stretch"/>
+	<pageFooter height="40" splitType="Stretch">
+		<element kind="textField" uuid="6a2ecd1f-69eb-475f-9b05-4148751ab4e2" x="460" y="10" width="100" height="30">
+			<expression><![CDATA[$V{PAGE_NUMBER}]]></expression>
+		</element>
+	</pageFooter>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

@@ -1,0 +1,98 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="InformesSencillos" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f0c870e3-427f-4192-a14d-7b1dabc1369d">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<parameter name="Nombre" class="java.lang.String"/>
+	<parameter name="Apellido" class="java.lang.String"/>
+	<query language="SQL"><![CDATA[SELECT product.name, positions.price, positions.quantity, SUM(positions.price * positions.quantity) AS suma
+FROM address, product, positions, document
+WHERE (address.id = document.addressid AND document.id = positions.documentid AND positions.productid = product.id)
+	AND address.firstname = $P{Nombre}
+	AND address.lastname = $P{Apellido}
+GROUP BY product.name, positions.price, positions.quantity
+
+]]></query>
+	<field name="NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="NAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PRODUCT"/>
+	</field>
+	<field name="PRICE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRICE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="POSITIONS"/>
+	</field>
+	<field name="QUANTITY" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="QUANTITY"/>
+		<property name="com.jaspersoft.studio.field.label" value="QUANTITY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="POSITIONS"/>
+	</field>
+	<field name="SUMA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SUMA"/>
+		<property name="com.jaspersoft.studio.field.label" value="SUMA"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="a2d02851-062d-4d65-a723-304399a511e5" x="140" y="24" width="290" height="30" forecolor="#0B381E" fontSize="20.0" hTextAlign="Center">
+			<text><![CDATA[INFORMES SENCILLOS]]></text>
+		</element>
+	</title>
+	<pageHeader height="70" splitType="Stretch">
+		<element kind="staticText" uuid="101e51e5-16a0-4a29-a101-1954048d2049" x="0" y="0" width="575" height="30" forecolor="#0A382E" fontSize="12.0" vTextAlign="Middle">
+			<text><![CDATA[Informe E: Muestre todos los productos comprados por un cliente. La suma de todos los pedidos.]]></text>
+		</element>
+		<element kind="staticText" uuid="060f8064-a47d-4378-a9b3-c93b3156043b" x="0" y="40" width="100" height="30" fontName="Times New Roman" fontSize="12.0">
+			<text><![CDATA[Nombre y apellido:]]></text>
+		</element>
+		<element kind="textField" uuid="8714ecbe-e942-4083-b0c2-60e9f6cc88f9" x="120" y="40" width="100" height="30">
+			<expression><![CDATA[$P{Nombre}]]></expression>
+		</element>
+		<element kind="textField" uuid="babc2db6-bfdc-4804-abd8-96a17c7e95e2" x="220" y="40" width="100" height="30">
+			<expression><![CDATA[$P{Apellido}]]></expression>
+		</element>
+	</pageHeader>
+	<columnHeader height="30" splitType="Stretch">
+		<element kind="staticText" uuid="db4cee95-c8c6-4879-9be0-61f5a82cc8b2" x="0" y="0" width="100" height="30">
+			<text><![CDATA[NAME]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c162dd3e-55f1-482f-bfa9-484f268de167"/>
+		</element>
+		<element kind="staticText" uuid="458cb459-c067-4b51-b99d-06304bf98d5a" x="143" y="0" width="100" height="30">
+			<text><![CDATA[PRICE]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4749c359-bd06-4ce4-89e6-301eef534e92"/>
+		</element>
+		<element kind="staticText" uuid="275867ce-74ae-411b-aba3-4b66a4c88c81" x="280" y="0" width="100" height="30" hTextAlign="Center">
+			<text><![CDATA[QUANTITY]]></text>
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d0ba7f74-8b94-4d64-80e6-d5cc0b21b76e"/>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="37" splitType="Stretch">
+			<element kind="textField" uuid="a3bbe6d5-2c05-40ff-807e-6c60d8585a4f" x="0" y="0" width="100" height="30">
+				<expression><![CDATA[$F{NAME}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c162dd3e-55f1-482f-bfa9-484f268de167"/>
+			</element>
+			<element kind="textField" uuid="84f31f35-a475-4050-862e-191c4079f889" x="143" y="0" width="100" height="30" pattern="0.00">
+				<expression><![CDATA[$F{PRICE}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4749c359-bd06-4ce4-89e6-301eef534e92"/>
+			</element>
+			<element kind="textField" uuid="671c7eb2-328b-4ef1-afdd-c9f3193fd99b" x="280" y="0" width="100" height="30" hTextAlign="Center">
+				<expression><![CDATA[$F{QUANTITY}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d0ba7f74-8b94-4d64-80e6-d5cc0b21b76e"/>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="52" splitType="Stretch">
+		<element kind="textField" uuid="27306c7b-c965-4a17-8001-c0be38dd3dc8" x="460" y="22" width="100" height="30" pattern="0.00">
+			<expression><![CDATA[$F{SUMA}]]></expression>
+		</element>
+		<element kind="staticText" uuid="7d431687-3e97-4772-957b-819862c992bf" x="376" y="21" width="100" height="30">
+			<text><![CDATA[SUMA TOTAL:]]></text>
+		</element>
+	</columnFooter>
+	<pageFooter height="66" splitType="Stretch">
+		<element kind="textField" uuid="557c8c4e-4ef4-433b-add2-bfb4cff54209" x="478" y="36" width="100" height="30">
+			<expression><![CDATA[$V{PAGE_NUMBER}]]></expression>
+		</element>
+	</pageFooter>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

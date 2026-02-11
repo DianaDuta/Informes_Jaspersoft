@@ -1,0 +1,116 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="a_resumen_subinforme" language="java" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f122971f-586a-4774-904a-942d1082eed8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
+	<parameter name="id_cliente" class="java.lang.Integer"/>
+	<query language="SQL"><![CDATA[SELECT *
+FROM product, document, positions
+WHERE (product.id = positions.productid AND positions.documentid = document.id) 
+	 	AND document.addressid = $P{id_cliente}]]></query>
+	<field name="ID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PRODUCT"/>
+	</field>
+	<field name="NAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="NAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PRODUCT"/>
+	</field>
+	<field name="COST" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="COST"/>
+		<property name="com.jaspersoft.studio.field.label" value="COST"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="PRODUCT"/>
+	</field>
+	<field name="COLUMN_4" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DOCUMENT"/>
+	</field>
+	<field name="ADDRESSID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ADDRESSID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ADDRESSID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DOCUMENT"/>
+	</field>
+	<field name="TOTAL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TOTAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DOCUMENT"/>
+	</field>
+	<field name="DOCUMENTID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="DOCUMENTID"/>
+		<property name="com.jaspersoft.studio.field.label" value="DOCUMENTID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="POSITIONS"/>
+	</field>
+	<field name="POSITIONNO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="POSITIONNO"/>
+		<property name="com.jaspersoft.studio.field.label" value="POSITIONNO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="POSITIONS"/>
+	</field>
+	<field name="PRODUCTID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="PRODUCTID"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRODUCTID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="POSITIONS"/>
+	</field>
+	<field name="QUANTITY" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="QUANTITY"/>
+		<property name="com.jaspersoft.studio.field.label" value="QUANTITY"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="POSITIONS"/>
+	</field>
+	<field name="PRICE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PRICE"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRICE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="POSITIONS"/>
+	</field>
+	<variable name="TOTAL1" resetType="Page" calculation="Average" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{TOTAL}]]></expression>
+	</variable>
+	<variable name="TOTAL2" resetType="Page" calculation="Sum" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{TOTAL}]]></expression>
+	</variable>
+	<variable name="PRICE1" resetType="Page" calculation="Highest" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{PRICE}]]></expression>
+	</variable>
+	<variable name="PRICE2" resetType="Page" calculation="Lowest" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{PRICE}]]></expression>
+	</variable>
+	<variable name="PRICE3" resetType="Page" calculation="Average" class="java.math.BigDecimal">
+		<expression><![CDATA[$F{PRICE}]]></expression>
+	</variable>
+	<background splitType="Stretch"/>
+	<title height="30" splitType="Stretch">
+		<element kind="staticText" uuid="53f499ec-990f-4a95-96ac-89f95be17b36" x="0" y="0" width="254" height="30" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[RESUMEN DE GASTOS]]></text>
+		</element>
+	</title>
+	<columnFooter height="30" splitType="Stretch">
+		<element kind="staticText" uuid="bc30c9d0-027e-41a4-8539-acb249d685fa" x="280" y="0" width="100" height="30">
+			<text><![CDATA[Precio más barato]]></text>
+		</element>
+		<element kind="staticText" uuid="9aafc5db-0401-4ebf-bb03-a51e1528c213" x="180" y="0" width="100" height="30">
+			<text><![CDATA[Producto más caro]]></text>
+		</element>
+		<element kind="staticText" uuid="a81124e0-e77a-44bc-a7b5-607c994151d1" x="80" y="0" width="100" height="30">
+			<text><![CDATA[Total gastado]]></text>
+		</element>
+		<element kind="staticText" uuid="4c79095d-5f51-43df-838b-976e8ed472b1" x="0" y="0" width="80" height="30">
+			<text><![CDATA[Precio medio de productos]]></text>
+		</element>
+	</columnFooter>
+	<pageFooter height="30" splitType="Stretch">
+		<element kind="textField" uuid="de3c55e1-a81b-49c6-a431-b4fcc1250d15" x="80" y="0" width="100" height="30" pattern="0.00">
+			<expression><![CDATA[$V{TOTAL2}]]></expression>
+		</element>
+		<element kind="textField" uuid="5aa28dba-d3d2-4134-87c2-4e42383648b9" x="180" y="0" width="100" height="30" pattern="0.00">
+			<expression><![CDATA[$V{PRICE1}]]></expression>
+		</element>
+		<element kind="textField" uuid="39e606f9-45c3-4585-a630-80b759bd6f24" x="280" y="0" width="100" height="30" pattern="0.00">
+			<expression><![CDATA[$V{PRICE2}]]></expression>
+		</element>
+		<element kind="textField" uuid="c886b65c-9765-46a1-bf3a-dbaf30f7bdd5" x="0" y="0" width="80" height="30" pattern="0.00">
+			<expression><![CDATA[$V{PRICE3}]]></expression>
+		</element>
+	</pageFooter>
+</jasperReport>

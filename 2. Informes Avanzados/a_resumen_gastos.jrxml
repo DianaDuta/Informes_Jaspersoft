@@ -1,0 +1,83 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="a_resumen_gastos" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d1781593-d232-4284-b901-5333e4b686bd">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="604"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="396"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="257"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="737"/>
+	<parameter name="id_cliente" class="java.lang.Integer"/>
+	<query language="SQL"><![CDATA[SELECT address.firstname AS nombre, address.lastname AS apellidos, address.city AS ciudad, document.id AS id_pedido
+FROM address, document
+WHERE address.id = document.addressid AND address.id = $P{id_cliente}]]></query>
+	<field name="NOMBRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FIRSTNAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="APELLIDOS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="LASTNAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="APELLIDOS"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="CIUDAD" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CITY"/>
+		<property name="com.jaspersoft.studio.field.label" value="CIUDAD"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="ID_PEDIDO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_PEDIDO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DOCUMENT"/>
+	</field>
+	<variable name="ID_PEDIDO1" resetType="Column" calculation="Count" class="java.lang.Integer">
+		<expression><![CDATA[$F{ID_PEDIDO}]]></expression>
+	</variable>
+	<background splitType="Stretch"/>
+	<title height="34" splitType="Stretch">
+		<element kind="staticText" uuid="fcf3e2e3-7f1c-4395-bc11-81d76420bb14" x="160" y="0" width="255" height="30" fontSize="14.0" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[RESUMEN DE PEDIDOS Y GASTOS]]></text>
+		</element>
+	</title>
+	<pageHeader height="30" splitType="Stretch">
+		<element kind="staticText" uuid="1708ac23-a38f-4042-8df0-2af31a989337" x="80" y="0" width="100" height="30">
+			<text><![CDATA[NOMBRE:]]></text>
+		</element>
+		<element kind="staticText" uuid="bd5e1ff6-d360-4860-866d-efcf0592602b" x="380" y="0" width="120" height="30">
+			<text><![CDATA[Nº TOTAL DE PEDIDOS:]]></text>
+		</element>
+		<element kind="textField" uuid="f4ba5c4d-269f-4806-a98d-30b2ec4f7d73" x="180" y="0" width="100" height="30">
+			<expression><![CDATA[$F{NOMBRE}]]></expression>
+		</element>
+	</pageHeader>
+	<columnHeader height="60" splitType="Stretch">
+		<element kind="textField" uuid="c93013b6-eabd-4f61-9a91-78d8e699fedd" x="180" y="0" width="100" height="30">
+			<expression><![CDATA[$F{APELLIDOS}]]></expression>
+		</element>
+		<element kind="textField" uuid="1b985393-8a15-41f1-a6a8-8b83f52c3943" x="180" y="30" width="100" height="30">
+			<expression><![CDATA[$F{CIUDAD}]]></expression>
+		</element>
+		<element kind="staticText" uuid="e1a3e5be-831c-4ca2-b5f1-b6bcf67a29d7" x="80" y="0" width="100" height="30">
+			<text><![CDATA[APELLIDO:]]></text>
+		</element>
+		<element kind="staticText" uuid="10464c55-45e0-4b3b-b9b9-6952c630e90f" x="80" y="30" width="100" height="30">
+			<text><![CDATA[CIUDAD:]]></text>
+		</element>
+		<element kind="textField" uuid="25816187-a5af-47fd-bb35-772ababc36c4" x="380" y="0" width="100" height="30">
+			<expression><![CDATA[$V{ID_PEDIDO1}]]></expression>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="200" splitType="Stretch">
+			<element kind="subreport" uuid="86cb657a-b052-4211-8d04-8b8d6af860b1" x="80" y="0" width="200" height="200">
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<expression><![CDATA["a_resumen_subinforme.jasper"]]></expression>
+				<parameter name="id_cliente">
+					<expression><![CDATA[$P{id_cliente}]]></expression>
+				</parameter>
+			</element>
+		</band>
+	</detail>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

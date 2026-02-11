@@ -1,0 +1,88 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Blank_A4" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8fdeecc2-b4f6-46ce-81d4-4d8199cccf68">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="Nombre" class="java.lang.String"/>
+	<parameter name="Apellido" class="java.lang.String"/>
+	<query language="sql"><![CDATA[SELECT address.id, address.firstname, address.lastname, document.total
+FROM address, document
+WHERE address.id = document.addressid AND address.firstname = $P{Nombre} AND address.lastname = $P{Apellido};
+]]></query>
+	<field name="ID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ID"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="FIRSTNAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FIRSTNAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="FIRSTNAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="LASTNAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="LASTNAME"/>
+		<property name="com.jaspersoft.studio.field.label" value="LASTNAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ADDRESS"/>
+	</field>
+	<field name="TOTAL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TOTAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="DOCUMENT"/>
+	</field>
+	<background splitType="Stretch"/>
+	<title height="79" splitType="Stretch">
+		<element kind="staticText" uuid="5b20f10e-9be0-485c-bf3b-9b1dac65ab79" x="120" y="24" width="310" height="30" forecolor="#340A66" fontName="Times New Roman" fontSize="20.0" hTextAlign="Center">
+			<text><![CDATA[INFORMES SENCILLOS]]></text>
+		</element>
+	</title>
+	<pageHeader height="50" splitType="Stretch">
+		<element kind="staticText" uuid="652448de-f194-48ea-a143-5b25205ecb07" x="0" y="0" width="594" height="30" forecolor="#084A25" fontName="Times New Roman" fontSize="12.0">
+			<text><![CDATA[Informe B: Todos los pedidos de un cliente en concreto (con nombre y apellidos).]]></text>
+		</element>
+		<element kind="staticText" uuid="8f586283-0b59-4aa5-8b8c-0c64ebc7ca90" x="0" y="20" width="100" height="30" fontName="Times New Roman" fontSize="12.0">
+			<text><![CDATA[Nombre y apellidos:]]></text>
+		</element>
+		<element kind="textField" uuid="f3602d54-5385-4a2b-9ef3-fb7f391193bd" x="120" y="20" width="100" height="30">
+			<expression><![CDATA[$P{Nombre}]]></expression>
+		</element>
+		<element kind="textField" uuid="27bb9e81-f263-4b60-9f39-8a7cc3f1be65" x="200" y="20" width="100" height="30">
+			<expression><![CDATA[$P{Apellido}]]></expression>
+		</element>
+	</pageHeader>
+	<columnHeader height="35" splitType="Stretch">
+		<element kind="staticText" uuid="306a9b66-5d19-463b-88b6-a92e6324ef64" x="0" y="0" width="100" height="30">
+			<text><![CDATA[ID]]></text>
+		</element>
+		<element kind="staticText" uuid="c2c23f87-4998-4791-abc2-854720588063" x="120" y="0" width="100" height="30">
+			<text><![CDATA[Nombre]]></text>
+		</element>
+		<element kind="staticText" uuid="79ca46fc-49dd-4af4-9ab1-0a5358cfdfd5" x="270" y="0" width="100" height="30">
+			<text><![CDATA[APELLIDO]]></text>
+		</element>
+		<element kind="staticText" uuid="df172627-f016-4f3a-83cb-08a70a4acebb" x="398" y="0" width="100" height="30">
+			<text><![CDATA[TOTAL]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<element kind="textField" uuid="f799f155-28f7-49e3-9173-205a5734da78" x="0" y="0" width="100" height="30">
+				<expression><![CDATA[$F{ID}]]></expression>
+			</element>
+			<element kind="textField" uuid="afcc100d-60cd-45de-a25d-521fc4f55389" x="120" y="0" width="100" height="30">
+				<expression><![CDATA[$F{FIRSTNAME}]]></expression>
+			</element>
+			<element kind="textField" uuid="c7124227-f6e4-4b78-8c9e-f70d2f4ac1de" x="270" y="0" width="100" height="30">
+				<expression><![CDATA[$F{LASTNAME}]]></expression>
+			</element>
+			<element kind="textField" uuid="79f54853-ee6c-4bc2-835b-7f7c985f8bd9" x="390" y="0" width="100" height="30" pattern="0.00">
+				<expression><![CDATA[$F{TOTAL}]]></expression>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="57" splitType="Stretch">
+		<element kind="textField" uuid="743cc9ff-66a7-4146-b381-d2ab84ab5283" x="498" y="27" width="72" height="30">
+			<expression><![CDATA[$V{PAGE_NUMBER}]]></expression>
+		</element>
+	</pageFooter>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>
